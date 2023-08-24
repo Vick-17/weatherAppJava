@@ -1,5 +1,6 @@
 package org.example;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -19,7 +20,7 @@ public class WeatherAPI {
     }
 
     // Méthode de recuperation des de donnée météo
-    public WeatherData getWeatherData(String city) throws IOException {
+    public WeatherData getWeatherData(String city) throws IOException, JSONException {
         // construction d'un url pour accéder aux données météo
         String urlString = apiUrl + "?q=" + city + "&appid=" + apiKey + "&units=metric";
 
@@ -45,9 +46,9 @@ public class WeatherAPI {
 
         //parsing des JSON pour obtenir les données que le veut afficher
         JSONObject jsonObject = new JSONObject(response.toString());
-        double temperature = Double.parseDouble(String.valueOf(jsonObject.getJSONObject("main").getBigDecimal("temp")));
-        double humidity = Double.parseDouble(String.valueOf(jsonObject.getJSONObject("main").getBigDecimal("humidity")));
-        double presure = Double.parseDouble(String.valueOf(jsonObject.getJSONObject("main").getBigDecimal("pressure")));
+        double temperature = Double.parseDouble(String.valueOf(jsonObject.getJSONObject("main").getInt("temp")));
+        double humidity = Double.parseDouble(String.valueOf(jsonObject.getJSONObject("main").getInt("humidity")));
+        double presure = Double.parseDouble(String.valueOf(jsonObject.getJSONObject("main").getInt("pressure")));
 
         // Création d'un object WeatherData avec les données récupéré
         return new WeatherData(temperature, humidity, presure);

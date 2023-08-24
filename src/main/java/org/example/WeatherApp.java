@@ -1,5 +1,7 @@
 package org.example;
 
+import org.json.JSONException;
+
 import java.io.IOException;
 
 public class WeatherApp {
@@ -18,6 +20,8 @@ public class WeatherApp {
         } catch (IOException e) {
             //Gestion des erreur lors de la recupération des données
             System.err.println("Pas trouver la data " + e.getMessage());
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         }
     }
 }
